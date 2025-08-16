@@ -1,35 +1,35 @@
-import axios from "axios"
+import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://rit-campus-backend.up.railway.app/api",
+  baseURL: "https://warp-ai-hackathon.el.r.appspot.com/api",
   timeout: 30000,
-})
+});
 
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("auth_token")
+    const token = localStorage.getItem("auth_token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return config
+    return config;
   },
   (error) => {
-    return Promise.reject(error)
-  },
-)
+    return Promise.reject(error);
+  }
+);
 
 // Response interceptor to handle auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("auth_token")
-      window.location.href = "/login"
+      localStorage.removeItem("auth_token");
+      window.location.href = "/login";
     }
-    return Promise.reject(error)
-  },
-)
+    return Promise.reject(error);
+  }
+);
 
 // API endpoints based on backend structure
 export const endpoints = {
@@ -52,10 +52,14 @@ export const endpoints = {
     filterOptions: "/resources/filter-options",
     quickFilters: "/resources/quick-filters",
     departments: "/resources/departments",
-    departmentLocations: (dept: string) => `/resources/departments/${dept}/locations`,
+    departmentLocations: (dept: string) =>
+      `/resources/departments/${dept}/locations`,
     locationDevices: (dept: string, loc: string) =>
-      `/resources/filter/devices/${encodeURIComponent(dept)}/${encodeURIComponent(loc)}`,
-    allLocationDevices: (loc: string) => `/resources/filter/devices/all/${encodeURIComponent(loc)}`,
+      `/resources/filter/devices/${encodeURIComponent(
+        dept
+      )}/${encodeURIComponent(loc)}`,
+    allLocationDevices: (loc: string) =>
+      `/resources/filter/devices/all/${encodeURIComponent(loc)}`,
   },
 
   // Dashboard
@@ -73,7 +77,8 @@ export const endpoints = {
     excel: "/export/excel",
     pdf: "/export/pdf",
     json: "/export/json",
-    department: (dept: string) => `/export/department/${encodeURIComponent(dept)}`,
+    department: (dept: string) =>
+      `/export/department/${encodeURIComponent(dept)}`,
     location: (loc: string) => `/export/location/${encodeURIComponent(loc)}`,
     filtered: "/export/filtered",
     bulk: "/export/bulk",
@@ -95,4 +100,4 @@ export const endpoints = {
     crud: "/ai/crud",
     queryDatabase: "/ai/query-database",
   },
-}
+};
