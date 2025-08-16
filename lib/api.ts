@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://warp-ai-hackathon.el.r.appspot.com/api",
+  baseURL: "https://c3bh7mn8-8080.inc1.devtunnels.ms/api",
   timeout: 30000,
 });
 
@@ -90,7 +90,7 @@ export const endpoints = {
     upload: "/upload/upload",
     template: "/upload/template",
     supportedFormats: "/upload/supported-formats",
-    import: "/upload/import",
+    import: "/import",
   },
 
   // AI Integration
